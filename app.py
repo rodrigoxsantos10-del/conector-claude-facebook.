@@ -1,34 +1,28 @@
 import facebook
 from groq import Groq
 
-# --- CONFIGURAÇÕES ---
-# Token que você acabou de gerar
-FB_TOKEN = "EAANhJupL2y8BRaTvv7oCZADxZBMZCoxxOiQnpZAhxaiyyd9IN6dRiqxoimOHV4CaaHdbaNGbFuZC9hwDZCZCa7AqIYvIWHdzB9GPggJlXjeGIUZBD68WZCEHPfdkfAosXKpEfV4EjXVM2hYElXI0dsFCSyNq9w2BsORbh55caSZAHsSxWai9ChDVfUlh68mo8LhHZBYbHyCV5anJSSQ3Jvlm4GVuRQ78RDcLZBy8XYOGOtQdOKTCCOyI7htnWZCzcVqTs4SkaPJ0M869wcmJZAHSExG7rUxAZDZD"
-
-# Sua chave do Groq (IA Gratuita)
+# --- CONFIGURACOES ---
+FB_TOKEN = "EAANhJupL2y8BRXZCSEYzZBDqMq2xSE7RfeDd8Kcj4jZArG0DcBBPuqhF2sFQ8NuIx73QSH8z4TBZBexeym8XHi6W4yKqv31SDFAEYnVtwNd0PX5cduA7XHN669ZCbnM4pz96qICbWkwKpigNkuzF8CfgRSiCZAKztrc7iY4Xl8QM7yOHlnFnnwt6bjBqlogHlfH2fvIPc14xnrh2dmB9ZAZBO731HQrAmgXR2z9MAJr8qfguCPoFwPxg8OjKMwb7tN2zFHBR1z70MUcZACj3Cmm1RsiMZD"
 GROQ_KEY = "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"
 
 def iniciar_conector():
     try:
-        # Conexão com Facebook
-        graph = facebook.GraphAPI(access_token=FB_TOKEN)
-        perfil = graph.get_object('me')
+        # Conecta ao Facebook
+        fb = facebook.GraphAPI(access_token=FB_TOKEN)
+        usuario = fb.get_object('me')
         
-        # Conexão com a IA
-        client = Groq(api_key=GROQ_KEY)
+        # Conecta à IA (Groq)
+        ai = Groq(api_key=GROQ_KEY)
         
-        print(f"\n✅ CONECTADO: Olá, {perfil['name']}!")
-        print("🤖 IA PRONTA: Estou pronta para analisar os anúncios da MS Manutenção.")
+        print(f"\n✅ SUCESSO: Conectado como {usuario['name']}")
         
-        # Teste de conversa com a IA
-        prompt = "Dê uma dica rápida de como melhorar anúncios de manutenção residencial no Facebook."
-        completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
+        # Pergunta de teste para a IA analisar seus anúncios
+        chat = ai.chat.completions.create(
+            messages=[{"role": "user", "content": "Dê uma dica estratégica para anúncios de manutenção residencial no Facebook Ads."}],
             model="llama3-8b-8192",
         )
-        print("\n--- DICA DA IA ---")
-        print(completion.choices[0].message.content)
-        
+        print(f"\n🤖 IA: {chat.choices.message.content}")
+
     except Exception as e:
         print(f"\n❌ ERRO: {e}")
 
