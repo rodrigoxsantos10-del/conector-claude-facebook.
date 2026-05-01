@@ -2,25 +2,28 @@ import facebook
 from groq import Groq
 
 # --- CONFIGURACOES ---
-FB_TOKEN = "EAANhJupL2y8BRT36GD3JOUY5NJZAv33PllJDZCY6UzTPerfXyPP2RW5LEy0gqlXEQWnRA5DpCt4LbIUwnEiw1MnqDdZBdxiUgoOAM48PDUZAX9xDIV5JsAEoTTkOdHJysz5qevcwWKYZAr7hwhN3w5XwZBA0SlUJ0FwpQHefWcCe78a8K4VZCGxAKCZAgIW295t8FZAFJ8WWo8XpJIVPA7wUOvgMQkH3POk4dupOf7kcQGJBAaZAGlZBKEAZA4ZCTR5bdVNVsLepkZBto4XMTIsRrzAqYzXgcZD"
+# Seu token novo ja esta aqui embaixo
+FB_TOKEN = "EAANhJupL2y8BRewFFtDQ7Ucky0pCjJXby5ZAlMfG3Us1N2qTljpufnyzZCfQWmwB8vhDckZBUS2ARGei1B0V5DhneZB4kFt2mZBZBqlONZCECQvSlBb2y3Knf41OgXj0PV49YNjZAiycF3CSdkBXJzU8iabBBIB97NA5jqkanCk7yNZBNI7v7QHeyotI5d5aUTbdDDlFJwlV1BsiFcCSlk2Yh43gQHXSNAfXFrOsqdgMk2m9Igza6HZAfbL0yaZBLQFMX8GJ43quoD3qGsvKclSZCGWcFQZDZD"
 GROQ_KEY = "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"
 
 def iniciar_conector():
     try:
-        # Conexao Facebook
+        # 1. Conexao Facebook
         fb = facebook.GraphAPI(access_token=FB_TOKEN)
         user = fb.get_object('me')
         print(f"\n✅ SUCESSO: Conectado como {user['name']}!")
         
-        # Conexao IA (Modelo Atualizado)
+        # 2. Conexao IA
         ai = Groq(api_key=GROQ_KEY)
         
-        # Teste de conversa
         chat = ai.chat.completions.create(
-            messages=[{"role": "user", "content": "Me dê uma dica rápida de marketing para a MS Manutenção residencial."}],
+            messages=[{"role": "user", "content": "Me dê uma dica rápida de marketing para a MS Manutenção residencial no Facebook."}],
             model="llama-3.3-70b-versatile",
         )
-        print(f"\n🤖 IA RESPONDE: {chat.choices.message.content}")
+        
+        # --- CORREÇÃO TÉCNICA: Acessando a resposta corretamente ---
+        resposta_ia = chat.choices[0].message.content
+        print(f"\n🤖 IA RESPONDE: {resposta_ia}")
 
     except Exception as e:
         print(f"\n❌ ERRO: {e}")
