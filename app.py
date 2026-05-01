@@ -20,7 +20,7 @@ def iniciar_conector():
             model="llama-3.3-70b-versatile",
         )
         
-        # --- CORREÇÃO AQUI: Adicionado o [0] para acessar o primeiro item da lista ---
+        # --- CORREÇÃO AQUI: Adicionado o [0] para acessar a resposta corretamente ---
         resposta_ia = chat.choices[0].message.content
         print(f"\n🤖 IA RESPONDE: {resposta_ia}")
 
