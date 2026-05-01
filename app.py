@@ -2,26 +2,26 @@ import facebook
 from groq import Groq
 
 # --- CONFIGURACOES ---
-# Seu token novo ja esta aqui embaixo
+# 1. Pegue o token novo no Facebook e cole entre as aspas abaixo
 FB_TOKEN = "EAANhJupL2y8BRewFFtDQ7Ucky0pCjJXby5ZAlMfG3Us1N2qTljpufnyzZCfQWmwB8vhDckZBUS2ARGei1B0V5DhneZB4kFt2mZBZBqlONZCECQvSlBb2y3Knf41OgXj0PV49YNjZAiycF3CSdkBXJzU8iabBBIB97NA5jqkanCk7yNZBNI7v7QHeyotI5d5aUTbdDDlFJwlV1BsiFcCSlk2Yh43gQHXSNAfXFrOsqdgMk2m9Igza6HZAfbL0yaZBLQFMX8GJ43quoD3qGsvKclSZCGWcFQZDZD"
 GROQ_KEY = "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"
 
 def iniciar_conector():
     try:
-        # 1. Conexao Facebook
+        # Conexao Facebook
         fb = facebook.GraphAPI(access_token=FB_TOKEN)
         user = fb.get_object('me')
         print(f"\n✅ SUCESSO: Conectado como {user['name']}!")
         
-        # 2. Conexao IA
+        # Conexao IA
         ai = Groq(api_key=GROQ_KEY)
         
         chat = ai.chat.completions.create(
-            messages=[{"role": "user", "content": "Me dê uma dica rápida de marketing para a MS Manutenção residencial no Facebook."}],
+            messages=[{"role": "user", "content": "Dê uma dica de marketing para a MS Manutenção residencial."}],
             model="llama-3.3-70b-versatile",
         )
         
-        # --- CORREÇÃO TÉCNICA: Acessando a resposta corretamente ---
+        # --- CORREÇÃO AQUI: Acessando o item zero da lista ---
         resposta_ia = chat.choices[0].message.content
         print(f"\n🤖 IA RESPONDE: {resposta_ia}")
 
